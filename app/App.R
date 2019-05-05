@@ -1,4 +1,6 @@
 library(shiny)
+#Importing the CSV data
+data <- read.csv(file = "data/winemag-data_first150k.csv")
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
