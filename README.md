@@ -16,3 +16,5 @@ We will be creating a Shiny App for our final project. We found a data set about
 
 # Data
 https://www.kaggle.com/zynicide/wine-reviews
+
+https://github.com/yllz/Wine_app/blob/master/app.R
