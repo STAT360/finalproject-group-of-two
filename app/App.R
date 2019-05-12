@@ -13,7 +13,7 @@ ui <- fluidPage(
       
       selectInput("var",
                   label = "Choose a country to display",
-                  choices = unique(country),
+                  choices = unique(data$country),
                   selected = ("US")),
       
       sliderInput("range",
@@ -25,38 +25,29 @@ ui <- fluidPage(
       
     ),
     
-      numericInput("obs", "Minimum Price:", 0, min = 0, max = 2300),
-    
-
-    
-
+    mainPanel(
+      #Reference to graphs should be placed here, actual graph code goes in server. Example:
+      #plotOutput('Price')
+    )
   )
 )
 
 # Server logic ----
 server <- function(input, output) {
-  output$map <- renderPlot({
-    
-    data <- switch(input$var,
-                   "Percent White" = counties$white,
-                   "Percent Black" = counties$black,
-                   "Percent Hispanic" = counties$hispanic,
-                   "Percent Asian" = counties$asian)
-    
-    color <- switch(input$var,
-                    "Percent White" = "darkgreen",
-                    "Percent Black" = "black",
-                    "Percent Hispanic" = "darkorange",
-                    "Percent Asian" = "darkviolet")
-    
-    legend <- switch(input$var,
-                     "Percent White" = "% White",
-                     "Percent Black" = "% Black",
-                     "Percent Hispanic" = "% Hispanic",
-                     "Percent Asian" = "% Asian")
-    
-    percent_map(var = data, color , legend, max = input$range[1], min = input$range[2])
+  #This is where we filter the data based on selected inputs. We need to fill out the filter() function based
+  #on what we select from the inputs.
+  filtered <- reactive({
+    dat %>%
+      filter()
   })
+  
+  #This is where the plots/graphs are actually genertated. Example:
+  
+  #output$Price <- renderPlot({
+    #ggplot(filtered(), aes(price)) +
+      #geom_density() +
+      #ggtitle("Density Plot of Price for Selected District")
+  #})
 }
 
 # Run app ----
