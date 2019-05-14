@@ -11,7 +11,7 @@ ui <- fluidPage(
     sidebarPanel(
       helpText("Yikes"),
       
-      selectInput("var",
+      selectInput("selectedCountry",
                   label = "Choose a country to display",
                   choices = unique(data$country),
                   selected = ("US")),
@@ -20,8 +20,8 @@ ui <- fluidPage(
                   label = "Range of points:",
                   min = 0, max = 100, value = c(0, 100)),
       
-      numericInput("obs", "Minimum Price:", 0, min = 0, max = 2300),
-      numericInput("obs", "Maximum Price:", 2300, min = 0, max = 2300)
+      numericInput("min", "Minimum Price:", 0, min = 0, max = 2300),
+      numericInput("max", "Maximum Price:", 2300, min = 0, max = 2300)
       
     ),
     
@@ -38,16 +38,16 @@ server <- function(input, output) {
   #on what we select from the inputs.
   filtered <- reactive({
     dat %>%
-      filter()
+      filter(country == input$selectedCountry)
   })
   
   #This is where the plots/graphs are actually genertated. Example:
   
-  #output$Price <- renderPlot({
-    #ggplot(filtered(), aes(price)) +
-      #geom_density() +
-      #ggtitle("Density Plot of Price for Selected District")
-  #})
+  output$Price <- renderPlot({
+    ggplot(filtered(), aes(price)) +
+      geom_density() +
+      ggtitle("Density Plot of Price for Selected District")
+  })
 }
 
 # Run app ----
