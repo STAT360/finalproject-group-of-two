@@ -7,11 +7,11 @@ data <- read.csv(file = "data/winemag-data_first150k.csv")
 # Define UI for app that draws a histogram ----
 # User interface ----
 ui <- fluidPage(
-  titlePanel("censusVis"),
+  titlePanel("Wines of the World"),
   
   sidebarLayout(
     sidebarPanel(
-      helpText("Yikes"),
+      helpText("Select options to filter your wine choices"),
       
       selectInput("selectedCountry",
                   label = "Choose a country to display",
@@ -34,7 +34,10 @@ ui <- fluidPage(
     
     mainPanel(
       #Reference to graphs should be placed here, actual graph code goes in server. Example:
-      plotOutput('Price')
+      plotOutput('Price'),
+      tabsetPanel(
+        tabPanel(title = "Summary Stats")
+      )
     )
   )
 )
