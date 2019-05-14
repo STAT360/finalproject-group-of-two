@@ -16,6 +16,11 @@ ui <- fluidPage(
                   choices = unique(data$country),
                   selected = ("US")),
       
+      textInput("selectedDescription",
+                 label = "Choose a word to filter",
+                 value = "Warm",
+                 placeholder = NULL),
+      
       sliderInput("range",
                   label = "Range of points:",
                   min = 0, max = 100, value = c(0, 100)),
