@@ -18,6 +18,11 @@ ui <- fluidPage(
                   choices = unique(data$country),
                   selected = ("US")),
       
+      textInput("selectedDescription",
+                 label = "Choose a word to filter",
+                 value = "Warm",
+                 placeholder = NULL),
+      
       sliderInput("range",
                   label = "Range of points:",
                   min = 0, max = 100, value = c(0, 100)),
@@ -43,7 +48,7 @@ server <- function(input, output) {
   #on what we select from the inputs.
   filtered <- reactive({
     data %>%
-      filter(country == input$selectedCountry)
+      filter(country == input$selectedCountry, price >= input$min, price <= input$max)
   })
   
   #This is where the plots/graphs are actually genertated. Example:
