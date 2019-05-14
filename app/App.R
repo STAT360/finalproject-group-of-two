@@ -32,7 +32,7 @@ ui <- fluidPage(
     
     mainPanel(
       #Reference to graphs should be placed here, actual graph code goes in server. Example:
-      #plotOutput('Price')
+      plotOutput('Price')
     )
   )
 )
