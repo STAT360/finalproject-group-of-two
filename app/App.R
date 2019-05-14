@@ -40,7 +40,7 @@ server <- function(input, output) {
   #on what we select from the inputs.
   filtered <- reactive({
     data %>%
-      filter(country == input$selectedCountry)
+      filter(country == input$selectedCountry, price >= input$min, price <= input$max)
   })
   
   #This is where the plots/graphs are actually genertated. Example:
