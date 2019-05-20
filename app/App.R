@@ -19,13 +19,13 @@ ui <- fluidPage(
                   selected = ("US")),
       
       textInput("selectedDescription",
-                 label = "Choose a word to filter",
+                 "Use one word to describe your favorite type of wine",
                  value = "Warm",
                  placeholder = NULL),
       
       sliderInput("range",
                   label = "Range of points:",
-                  min = 0, max = 100, value = c(0, 100)),
+                  min = 80, max = 100, value = c(80, 100)),
       
       numericInput("min", "Minimum Price:", 0, min = 0, max = 2300),
       numericInput("max", "Maximum Price:", 2300, min = 0, max = 2300)
@@ -35,12 +35,15 @@ ui <- fluidPage(
     mainPanel(
       #Reference to graphs should be placed here, actual graph code goes in server. Example:
       plotOutput('Price'),
-      tabsetPanel(
-        tabPanel(title = "Summary Stats")
+        
+      plotOutput("Points")
+      
+        
+      )
       )
     )
-  )
-)
+  
+
 
 # Server logic ----
 server <- function(input, output) {
@@ -51,7 +54,14 @@ server <- function(input, output) {
       filter(country == input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2])
   })
   
+  
   #This is where the plots/graphs are actually genertated. Example:
+  
+  output$Points <- renderPlot({
+    ggplot(filtered(), aes(points)) +
+      geom_histogram() +
+      ggtitle("Distribution of Points")
+  })
   
   output$Price <- renderPlot({
     ggplot(filtered(), aes(price)) +
