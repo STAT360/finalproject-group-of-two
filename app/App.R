@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(stringr)
 #Importing the CSV data
 data <- read.csv(file = "data/winemag-data_first150k.csv")
 
@@ -52,11 +53,13 @@ server <- function(input, output) {
   #on what we select from the inputs.
   filtered <- reactive({
     data %>%
-      filter(country == input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2])
+      filter(country == input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2], str_detect(description,input$selectedDescription))
+    #str_contains
   })
   
   
   #This is where the plots/graphs are actually genertated. Example:
+
   
   output$Points <- renderPlot({
     ggplot(filtered(), aes(points)) +
