@@ -33,15 +33,16 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      #Reference to graphs should be placed here, actual graph code goes in server. Example:
-      plotOutput('Price'),
-        
-      plotOutput("Points")
       
+      tabsetPanel(type = "tabs",
+                  #Reference to graphs should be placed here, actual graph code goes in server. Example:
+                  tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points")),
+                  tabPanel("Summary", plotOutput("summary_1"))
+      )
         
-      )
-      )
     )
+  )
+)
   
 
 
