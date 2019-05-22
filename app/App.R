@@ -54,17 +54,16 @@ server <- function(input, output) {
   filtered <- reactive({
     data %>%
       filter(country == input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2], str_detect(description,input$selectedDescription))
-    #str_contains
   })
   
   
   #This is where the plots/graphs are actually genertated. Example:
 
-  
   output$Points <- renderPlot({
     ggplot(filtered(), aes(points)) +
       geom_histogram() +
-      ggtitle("Distribution of Points")
+      labs(title= "Distribution of Points", x= "Points", y= "Count") +
+      xlim(80,100) 
   })
   
   output$Price <- renderPlot({
