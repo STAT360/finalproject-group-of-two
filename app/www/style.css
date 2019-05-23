@@ -1,0 +1,28 @@
+@import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
+      
+h2 {
+  font-family: 'Lobster', cursive;
+  font-weight: 500;
+  line-height: 1.1;
+  color: #a82121;
+}
+      
+.irs-bar {
+  background-color: #a82121;
+}
+
+.irs-from {
+  background-color: #a82121;
+}
+
+.irs-to {
+  background-color: #a82121;
+}
+
+a {
+  color: #a82121;
+}
+
+.well {
+  background-color: #ffedaa;
+}
