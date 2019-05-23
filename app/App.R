@@ -61,8 +61,8 @@ server <- function(input, output) {
 
   output$Points <- renderPlot({
     ggplot(filtered(), aes(points)) +
-      geom_histogram() +
-      labs(title= "Distribution of Points", x= "Points", y= "Count") +
+      geom_bar() +
+      labs(title= "Distribution of Score", x= "Score") +
       xlim(80,100) 
   })
   
