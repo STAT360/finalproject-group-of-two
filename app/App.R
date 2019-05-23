@@ -7,7 +7,6 @@ library(shinyWidgets)
 #Importing the CSV data
 data <- read.csv(file = "data/winemag-data_first150k.csv")
 
-
 # Define UI for app that draws a histogram ----
 # User interface ----
 
