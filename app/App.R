@@ -2,13 +2,15 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(stringr)
-library(shinydashboard)
+
 #Importing the CSV data
 data <- read.csv(file = "data/winemag-data_first150k.csv")
 
 # Define UI for app that draws a histogram ----
 # User interface ----
-ui <- fluidPage(
+
+ui <- fluidPage(theme = "style.css",
+
 
   titlePanel("Wines of the World"),
   
@@ -63,15 +65,15 @@ server <- function(input, output) {
 
   output$Points <- renderPlot({
     ggplot(filtered(), aes(points)) +
-      geom_histogram(color="darkred") +
-      labs(title= "Distribution of Points", x= "Points", y= "Count") +
+      geom_bar(fill = "#7f1a1a") +
+      labs(title= "Distribution of Score", x= "Score") +
       xlim(80,100) 
   })
   
   output$Price <- renderPlot({
     ggplot(filtered(), aes(price)) +
-      geom_density() +
-      ggtitle("Density Plot of Price for Selected District")
+      geom_bar(fill = "#7f1a1a") +
+      labs(title= "Distribution of Price", x= "Score") 
   })
 }
 
