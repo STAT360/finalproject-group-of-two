@@ -79,7 +79,7 @@ server <- function(input, output) {
   })
   
   output$SummaryCountry <- renderPlot({
-    ggplot() +
+    ggplot(data) +
       geom_bar(mapping = aes(x = points, fill = country), position = "fill") +
       labs(fill = "Country Stuff", y = "proportion")
       
