@@ -7,6 +7,7 @@ library(shinyWidgets)
 #Importing the CSV data
 data <- read.csv(file = "data/winemag-data_first150k.csv")
 
+
 # Define UI for app that draws a histogram ----
 # User interface ----
 
@@ -20,11 +21,10 @@ ui <- fluidPage(theme = "style.css",
     sidebarPanel(
       helpText("Select options to filter your wine choices"),
       
-      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE),multiple = T),
+      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE), selected= "US", multiple = T),
       
       textInput("selectedDescription",
                  "Use one word to describe your favorite type of wine",
-                 value = "Warm",
                  placeholder = NULL),
       
       sliderInput("range",
