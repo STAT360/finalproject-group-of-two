@@ -10,7 +10,8 @@ data <- read.csv(file = "data/winemag-data_first150k.csv")
 # Define UI for app that draws a histogram ----
 # User interface ----
 
-ui <- fluidPage(theme = "style.css",
+ui <- fluidPage(theme = "style.css", 
+                
  
 
   titlePanel("Wines of the World"),
