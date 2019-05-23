@@ -2,6 +2,7 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(stringr)
+library(shinyWidgets)
 
 #Importing the CSV data
 data <- read.csv(file = "data/winemag-data_first150k.csv")
@@ -9,8 +10,9 @@ data <- read.csv(file = "data/winemag-data_first150k.csv")
 # Define UI for app that draws a histogram ----
 # User interface ----
 
-ui <- fluidPage(theme = "style.css",
-
+ui <- fluidPage(theme = "style.css", 
+                
+ 
 
   titlePanel("Wines of the World"),
   
@@ -18,10 +20,7 @@ ui <- fluidPage(theme = "style.css",
     sidebarPanel(
       helpText("Select options to filter your wine choices"),
       
-      selectInput("selectedCountry",
-                  label = "Choose a country to display",
-                  choices = unique(data$country),
-                  selected = ("US")),
+      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE),multiple = T),
       
       textInput("selectedDescription",
                  "Use one word to describe your favorite type of wine",
@@ -60,6 +59,9 @@ server <- function(input, output) {
       filter(country == input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2], str_detect(description,input$selectedDescription))
   })
   
+  observe({
+    print(input$selectedCountry)
+  })
   
   #This is where the plots/graphs are actually genertated. Example:
 
