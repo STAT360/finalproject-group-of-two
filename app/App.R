@@ -38,7 +38,7 @@ ui <- fluidPage(
       tabsetPanel(type = "tabs",
                   #Reference to graphs should be placed here, actual graph code goes in server. Example:
                   tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points")),
-                  tabPanel("Summary", plotOutput("summary_1"))
+                  tabPanel("Summary", plotOutput("SummaryCountry"), plotOutput("SummaryPoints"))
       )
         
     )
@@ -70,6 +70,20 @@ server <- function(input, output) {
     ggplot(filtered(), aes(price)) +
       geom_density() +
       ggtitle("Density Plot of Price for Selected District")
+  })
+  
+  output$SummaryCountry <- renderPlot({
+    
+  })
+  
+  output$SummaryPoints <- renderPlot({
+    data %>% 
+      group_by(gr = cut(points, breaks = seq(0, 100, by = 5) - 
+                          .Machine$double.eps, right = FALSE)) %>% 
+      summarise(n = n()) %>% 
+      ggplot(mapping = aes(x = "", y = n, fill = gr)) +
+        geom_bar(width = 1, stat = "identity") +
+        coord_polar("y", start = 0)
   })
 }
 
