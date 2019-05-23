@@ -20,11 +20,10 @@ ui <- fluidPage(theme = "style.css",
     sidebarPanel(
       helpText("Select options to filter your wine choices"),
       
-      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE),multiple = T),
+      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE), selected= "US", multiple = T),
       
       textInput("selectedDescription",
                  "Use one word to describe your favorite type of wine",
-                 value = "Warm",
                  placeholder = NULL),
       
       sliderInput("range",
