@@ -11,7 +11,7 @@ data <- read.csv(file = "data/winemag-data_first150k.csv")
 # User interface ----
 
 ui <- fluidPage(theme = "style.css",
-
+ 
 
   titlePanel("Wines of the World"),
   
