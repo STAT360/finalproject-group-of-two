@@ -7,7 +7,8 @@ data <- read.csv(file = "data/winemag-data_first150k.csv")
 
 # Define UI for app that draws a histogram ----
 # User interface ----
-ui <- fluidPage(
+ui <- fluidPage(theme = "style.css",
+
   titlePanel("Wines of the World"),
   
   sidebarLayout(
@@ -61,7 +62,7 @@ server <- function(input, output) {
 
   output$Points <- renderPlot({
     ggplot(filtered(), aes(points)) +
-      geom_bar() +
+      geom_bar(fill = "#7f1a1a") +
       labs(title= "Distribution of Score", x= "Score") +
       xlim(80,100) 
   })
