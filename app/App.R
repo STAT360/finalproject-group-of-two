@@ -20,7 +20,8 @@ ui <- fluidPage(theme = "style.css",
     sidebarPanel(
       helpText("Select options to filter your wine choices"),
       
-      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE), selected= "US", multiple = T),
+      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), 
+                  options = list(`actions-box` = TRUE), selected= "US", multiple = T),
       
       textInput("selectedDescription",
                  "Use one word to describe your favorite type of wine",
@@ -39,7 +40,7 @@ ui <- fluidPage(theme = "style.css",
       
       tabsetPanel(type = "tabs",
                   #Reference to graphs should be placed here, actual graph code goes in server. Example:
-                  tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points")),
+                  tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points"), plotOutput("PricePoints")),
                   tabPanel("Summary", plotOutput("SummaryCountry"), plotOutput("SummaryPoints"))
       )
         
@@ -92,6 +93,13 @@ server <- function(input, output) {
       ggplot(mapping = aes(x = "", y = n, fill = gr)) +
         geom_bar(width = 1, stat = "identity") +
         coord_polar("y", start = 0)
+  })
+  
+  output$PricePoints <- renderPlot({
+    ggplot(filtered(), aes(x=points, y=price))+
+      geom_point(color="#7f1a1a") +
+      geom_smooth(method="lm", color="#7f1a1a") +
+      labs(title="Price vs. Points", x="Points", y="Price")
   })
 }
 
