@@ -11,8 +11,6 @@ data <- read.csv(file = "data/winemag-data_first150k.csv")
 # User interface ----
 
 ui <- fluidPage(theme = "style.css", 
-                
- 
 
   titlePanel("Wines of the World"),
   
@@ -41,7 +39,7 @@ ui <- fluidPage(theme = "style.css",
       tabsetPanel(type = "tabs",
                   #Reference to graphs should be placed here, actual graph code goes in server. Example:
                   tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points"), plotOutput("PricePoints")),
-                  tabPanel("Summary", plotOutput("SummaryCountry"), plotOutput("SummaryPoints"))
+                  tabPanel("Summary", plotOutput("SummaryPoints"), plotOutput("SummaryPrice"))
       )
         
     )
@@ -78,18 +76,25 @@ server <- function(input, output) {
       labs(title= "Distribution of Price", x= "Price") 
   })
   
-  output$SummaryCountry <- renderPlot({
+  output$PricePoints <- renderPlot({
+    ggplot(filtered(), aes(x=points, y=price))+
+      geom_point(color="#7f1a1a") +
+      geom_smooth(method="lm", color="#7f1a1a") +
+      labs(title="Price vs. Points", x="Points", y="Price")
+  })
+  
+  output$SummaryPoints <- renderPlot({
     data %>% 
       group_by(gr = cut(points, breaks = seq(0, 100, by = 5) - 
                           .Machine$double.eps, right = FALSE)) %>% 
+      
       ggplot() +
         geom_bar(mapping = aes(x = gr, fill = country), position = "fill") +
         labs(fill = "Countries", y = "proportion", title = "Proportion of Countries in Point Range") +
         scale_x_discrete(name = "point range", labels = c("75-80", "80-85", "85-90", "90-95", "95-100"))
-      
   })
   
-  output$SummaryPoints <- renderPlot({
+  output$SummaryPrice <- renderPlot({
     data %>% 
       group_by(gr = cut(price, breaks = seq(0, 2300, by = 230) - 
                           .Machine$double.eps, right = FALSE)) %>% 
@@ -99,12 +104,6 @@ server <- function(input, output) {
         scale_x_discrete(name = "price range", labels = c("0-230", "230-460", "460-690", "690-920", "920-1150", "1150-1380", "1380-1610", "1610-1930", "1930-2070", "2070-2300"))
   })
   
-  output$PricePoints <- renderPlot({
-    ggplot(filtered(), aes(x=points, y=price))+
-      geom_point(color="#7f1a1a") +
-      geom_smooth(method="lm", color="#7f1a1a") +
-      labs(title="Price vs. Points", x="Points", y="Price")
-  })
 }
 
 # Run app ----
