@@ -79,20 +79,24 @@ server <- function(input, output) {
   })
   
   output$SummaryCountry <- renderPlot({
-    ggplot(data) +
-      geom_bar(mapping = aes(x = points, fill = country), position = "fill") +
-      labs(fill = "Country Stuff", y = "proportion")
+    data %>% 
+      group_by(gr = cut(points, breaks = seq(0, 100, by = 5) - 
+                          .Machine$double.eps, right = FALSE)) %>% 
+      ggplot() +
+        geom_bar(mapping = aes(x = gr, fill = country), position = "fill") +
+        labs(fill = "Countries", y = "proportion", title = "Proportion of Countries in Point Range") +
+        scale_x_discrete(name = "point range", labels = c("75-80", "80-85", "85-90", "90-95", "95-100"))
       
   })
   
   output$SummaryPoints <- renderPlot({
     data %>% 
-      group_by(gr = cut(points, breaks = seq(0, 100, by = 5) - 
+      group_by(gr = cut(price, breaks = seq(0, 2300, by = 230) - 
                           .Machine$double.eps, right = FALSE)) %>% 
-      summarise(n = n()) %>% 
-      ggplot(mapping = aes(x = "", y = n, fill = gr)) +
-        geom_bar(width = 1, stat = "identity") +
-        coord_polar("y", start = 0)
+      ggplot() +
+        geom_bar(mapping = aes(x = gr, fill = country), position = "fill") +
+        labs(fill = "Countries", y = "proportion", title = "Proportion of Countries in Price Range") +
+        scale_x_discrete(name = "price range", labels = c("0-230", "230-460", "460-690", "690-920", "920-1150", "1150-1380", "1380-1610", "1610-1930", "1930-2070", "2070-2300"))
   })
   
   output$PricePoints <- renderPlot({
