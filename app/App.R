@@ -20,7 +20,8 @@ ui <- fluidPage(theme = "style.css",
     sidebarPanel(
       helpText("Select options to filter your wine choices"),
       
-      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), options = list(`actions-box` = TRUE), selected= "US", multiple = T),
+      pickerInput("selectedCountry","Country", choices=levels(unique(data$country)), 
+                  options = list(`actions-box` = TRUE), selected= "US", multiple = T),
       
       textInput("selectedDescription",
                  "Use one word to describe your favorite type of wine",
@@ -39,7 +40,7 @@ ui <- fluidPage(theme = "style.css",
       
       tabsetPanel(type = "tabs",
                   #Reference to graphs should be placed here, actual graph code goes in server. Example:
-                  tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points")),
+                  tabPanel("Fun Stuff", plotOutput("Price"), plotOutput("Points"), plotOutput("PricePoints")),
                   tabPanel("Summary", plotOutput("SummaryCountry"), plotOutput("SummaryPoints"))
       )
         
@@ -96,6 +97,13 @@ server <- function(input, output) {
         geom_bar(mapping = aes(x = gr, fill = country), position = "fill") +
         labs(fill = "Countries", y = "proportion", title = "Proportion of Countries in Price Range") +
         scale_x_discrete(name = "price range", labels = c("0-230", "230-460", "460-690", "690-920", "920-1150", "1150-1380", "1380-1610", "1610-1930", "1930-2070", "2070-2300"))
+  })
+  
+  output$PricePoints <- renderPlot({
+    ggplot(filtered(), aes(x=points, y=price))+
+      geom_point(color="#7f1a1a") +
+      geom_smooth(method="lm", color="#7f1a1a") +
+      labs(title="Price vs. Points", x="Points", y="Price")
   })
 }
 
