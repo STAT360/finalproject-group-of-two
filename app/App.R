@@ -7,7 +7,6 @@ library(shinyWidgets)
 #Importing the CSV data
 data <- read.csv(file = "data/winemag-data_first150k.csv")
 
-
 # Define UI for app that draws a histogram ----
 # User interface ----
 
@@ -56,7 +55,7 @@ server <- function(input, output) {
   #on what we select from the inputs.
   filtered <- reactive({
     data %>%
-      filter(country == input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2], str_detect(description,input$selectedDescription))
+      filter(country %in% input$selectedCountry, price >= input$min, price <= input$max, points >= input$range[1], points <= input$range[2], str_detect(description,input$selectedDescription))
   })
   
   observe({
