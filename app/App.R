@@ -74,7 +74,7 @@ server <- function(input, output) {
   output$Price <- renderPlot({
     ggplot(filtered(), aes(price)) +
       geom_bar(fill = "#7f1a1a") +
-      labs(title= "Distribution of Price", x= "Score") 
+      labs(title= "Distribution of Price", x= "Price") 
   })
   
   output$SummaryCountry <- renderPlot({
